@@ -1,17 +1,7 @@
 import useReactResponsive from "./useReactResponsive";
 
 const MediaQuery = (props) => {
-
-
-    const standartMedias = [
-        'orientation',
-        'minResolution',
-        'maxResolution',
-        'minWidth',
-        'maxWidth',
-        'minHeight',
-        'maxHeight'
-    ]
+    const standartMedias = ['orientation', 'minResolution', 'maxResolution', 'minWidth', 'maxWidth', 'minHeight', 'maxHeight']
     let media
     let baseMedia
     let sizing = ''
@@ -44,8 +34,6 @@ const MediaQuery = (props) => {
 
     const result = useReactResponsive({query: `(${media}:${props[baseMedia]}${sizing})`})
 
-    return (
-        result.math && props.children
-    )
+    return (result.math && props.children)
 }
 export default MediaQuery

@@ -5,7 +5,7 @@ const useDocumentVisibility = () => {
     const [visible, setVisible] = useState(true)
 
     const onVisibilityChange = () => {
-        if(document.hidden){
+        if (document.hidden) {
             setVisible(false)
             setCount(count + 1)
         } else {
@@ -22,8 +22,7 @@ const useDocumentVisibility = () => {
 
 
     return {
-        count,
-        visible,
+        count, visible,
     }
 }
 
