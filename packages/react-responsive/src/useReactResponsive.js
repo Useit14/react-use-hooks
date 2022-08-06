@@ -44,7 +44,6 @@ const useReactResponsive = (properties) => {
     } else {
         medias = window.matchMedia(properties.query)
     }
-
     return {
         math
     }
