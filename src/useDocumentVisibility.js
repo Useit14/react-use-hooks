@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const useDocumentVisibility = () => {
     const [count, setCount] = useState(0)
@@ -13,7 +13,13 @@ const useDocumentVisibility = () => {
         }
     }
 
-    document.addEventListener('visibilitychange',onVisibilityChange)
+    useEffect(() => {
+        document.addEventListener('visibilitychange', onVisibilityChange)
+        return () => {
+            document.removeEventListener('visibilitychange', onVisibilityChange)
+        }
+    })
+
 
     return {
         count,
