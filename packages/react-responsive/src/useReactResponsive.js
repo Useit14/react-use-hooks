@@ -1,7 +1,7 @@
 import {useLayoutEffect, useState} from "react";
 
 const useReactResponsive = (properties) => {
-    const [math, setMatch] = useState(false)
+    const [math, setMatch] = useState(window.matchMedia(properties.query).matches)
     const standartSizesView = [576, 720, 960, 1140]
     let query = properties.query.substring(1, properties.query.length - 1)
     let [media, sizing] = query.split(':')
