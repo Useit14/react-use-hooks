@@ -6,7 +6,7 @@ const useDocumentVisibility = () => {
 
     const onVisibilityChange = () => {
         setVisible(document.hidden)
-        setCount((currentCount)=>currentCount + 1)
+        setCount((currentCount) => currentCount + 1)
     }
 
     useEffect(() => {
@@ -15,7 +15,6 @@ const useDocumentVisibility = () => {
             document.removeEventListener('visibilitychange', onVisibilityChange)
         }
     }, [])
-
 
     return {
         count, visible, onVisibilityChange
