@@ -32,7 +32,12 @@ const MediaQuery = (props) => {
         }
     })
 
-    const result = useReactResponsive({query: `(${media}:${props[baseMedia]}${sizing})`})
-    return (result.math && props.children)
+    const response = useReactResponsive({
+        query: `(${media}:${props[baseMedia]}${sizing})`
+    });
+
+    const result =
+        response.math.matches !== undefined ? response.math.matches : response.math;
+    return result && props.children;
 }
 export default MediaQuery
