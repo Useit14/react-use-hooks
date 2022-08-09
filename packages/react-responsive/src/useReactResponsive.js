@@ -1,23 +1,22 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const useReactResponsive = (properties) => {
-  const [math, setMatch] = useState(window.matchMedia(properties.query).matches);
-  let medias = window.matchMedia(properties.query);
+  const [match, setMatch] = useState(window.matchMedia(properties.query).matches);
 
-  const onChangeMedia = () => {
-    setMatch(medias.matches);
-  };
+  useEffect(() => {
+    let medias = window.matchMedia(properties.query);
 
-  useLayoutEffect(() => {
+    const onChangeMedia = () => {
+      setMatch(medias.matches);
+    };
+
     medias.addEventListener('change', onChangeMedia);
     return () => {
       medias.removeEventListener('change', onChangeMedia);
     };
-  });
+  }, [properties.query]);
 
-  return {
-    math,
-  };
+  return match;
 };
 
 export default useReactResponsive;

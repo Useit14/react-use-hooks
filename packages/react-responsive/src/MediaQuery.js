@@ -42,7 +42,6 @@ const MediaQuery = (props) => {
     query: `(${media}:${props[baseMedia]}${sizing})`,
   });
 
-  const result = response.math.matches !== undefined ? response.math.matches : response.math;
-  return result && props.children;
+  return typeof props.children === 'function' ? props.children(response) : response && props.children;
 };
 export default MediaQuery;

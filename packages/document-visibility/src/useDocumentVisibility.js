@@ -1,19 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 const useDocumentVisibility = () => {
   const [count, setCount] = useState(0);
   const [visible, setVisible] = useState(true);
+  const callbacks = useRef([]);
 
-  const onVisibilityChange = () => {
-    setVisible(document.hidden);
-    setCount((currentCount) => currentCount + 1);
+  const handler = () => {
+    setVisible(!document.hidden);
+    if (!document.hidden) {
+      setCount((currentCount) => currentCount + 1);
+    }
+
+    callbacks.current.forEach((callback) => {
+      callback(!document.hidden);
+    });
   };
 
   useEffect(() => {
-    document.addEventListener('visibilitychange', onVisibilityChange);
+    document.addEventListener('visibilitychange', handler);
     return () => {
-      document.removeEventListener('visibilitychange', onVisibilityChange);
+      document.removeEventListener('visibilitychange', handler);
     };
+  }, []);
+
+  const onVisibilityChange = useCallback((callback) => {
+    callbacks.current.push(callback);
   }, []);
 
   return {
