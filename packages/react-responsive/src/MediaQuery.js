@@ -1,16 +1,16 @@
-import { useMediaQuery } from './useMediaQuery';
+import { useReactResponsive } from './useMediaQuery';
 
-export const MediaQuery = (props) => {
+const MediaQuery = (props) => {
   const standartMedias = Object.entries(props);
 
-  let medias = [];
-  let sizing = '';
+  const medias = [];
 
   const isNumber = (number) => {
     return !isNaN(number) && isFinite(number);
   };
 
   for (const [key, value] of standartMedias) {
+    let sizing = '';
     let substrMedia = key.substring(0, 3) + '-' + key.substring(3, key.length).toLowerCase();
     if (key === 'orientation') {
       medias.push(`(${key}:${value})`);
@@ -32,6 +32,8 @@ export const MediaQuery = (props) => {
     }
   }
 
-  const response = useMediaQuery({ query: medias.join(' and ') });
+  const response = useReactResponsive({ query: medias.join(' and ') });
   return typeof props.children === 'function' ? props.children(response) : response && props.children;
 };
+
+export default MediaQuery;
