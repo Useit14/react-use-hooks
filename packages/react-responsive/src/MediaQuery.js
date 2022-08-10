@@ -1,47 +1,37 @@
-import useReactResponsive from './useReactResponsive';
+import { useMediaQuery } from './useMediaQuery';
 
-const MediaQuery = (props) => {
-  const standartMedias = [
-    'orientation',
-    'minResolution',
-    'maxResolution',
-    'minWidth',
-    'maxWidth',
-    'minHeight',
-    'maxHeight',
-  ];
-  let media;
-  let baseMedia;
+export const MediaQuery = (props) => {
+  const standartMedias = Object.entries(props);
+
+  let medias = [];
   let sizing = '';
 
   const isNumber = (number) => {
     return !isNaN(number) && isFinite(number);
   };
 
-  standartMedias.forEach((el) => {
-    if (typeof props[el] !== 'undefined') {
-      baseMedia = el;
-      if (el === 'orientation') {
-        media = el;
-      } else if (el === 'minResolution' || el === 'maxResolution') {
-        media = el.substring(0, 3) + '-' + el.substring(3, el.length).toLowerCase();
-
-        if (isNumber(props[el])) {
-          sizing = 'dppx';
-        }
+  for (const [key, value] of standartMedias) {
+    let substrMedia = key.substring(0, 3) + '-' + key.substring(3, key.length).toLowerCase();
+    if (key === 'orientation') {
+      medias.push(`(${key}:${value})`);
+    }
+    if (key.includes('Resolution')) {
+      if (isNumber(value)) {
+        sizing = 'dppx';
+        medias.push(`(${substrMedia}:${value}${sizing} `);
       } else {
-        media = el.substring(0, 3) + '-' + el.substring(3, el.length).toLowerCase();
-        if (isNumber(props[el])) {
-          sizing = 'px';
-        }
+        medias.push(`(${substrMedia}:${value})`);
+      }
+    } else if (key.includes('Width') || key.includes('Height')) {
+      if (isNumber(value)) {
+        sizing = 'px';
+        medias.push(`(${substrMedia}:${value}${sizing})`);
+      } else {
+        medias.push(`(${substrMedia}:${value}${sizing})`);
       }
     }
-  });
+  }
 
-  const response = useReactResponsive({
-    query: `(${media}:${props[baseMedia]}${sizing})`,
-  });
-
+  const response = useMediaQuery({ query: medias.join(' and ') });
   return typeof props.children === 'function' ? props.children(response) : response && props.children;
 };
-export default MediaQuery;

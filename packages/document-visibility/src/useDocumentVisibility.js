@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 
-const useDocumentVisibility = () => {
+export const useDocumentVisibility = () => {
   const [count, setCount] = useState(0);
   const [visible, setVisible] = useState(true);
   const callbacks = useRef([]);
@@ -33,5 +33,3 @@ const useDocumentVisibility = () => {
     onVisibilityChange,
   };
 };
-
-export default useDocumentVisibility;

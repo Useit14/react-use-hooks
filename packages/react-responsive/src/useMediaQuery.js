@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
-const useReactResponsive = (properties) => {
-  const [match, setMatch] = useState(window.matchMedia(properties.query).matches);
-
+export const useMediaQuery = (properties) => {
+  const [match, setMatch] = useState(() => {
+    return window.matchMedia(properties.query).matches;
+  });
   useEffect(() => {
     let medias = window.matchMedia(properties.query);
 
@@ -18,5 +19,3 @@ const useReactResponsive = (properties) => {
 
   return match;
 };
-
-export default useReactResponsive;
