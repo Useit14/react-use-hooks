@@ -1,10 +1,9 @@
-import { useEffect, useState, useRef, useCallback } from "react";
-import {createInterface} from "readline";
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 export const useDocumentVisibility = () => {
-  const [count, setCount] = useState<number>(0);
-  const [visible, setVisible] = useState<boolean>(true);
-  const callbacks = useRef<any[]>([]);
+  const [count, setCount] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const callbacks = useRef<object[]>([]);
 
   const handler = () => {
     setVisible(!document.hidden);
@@ -12,25 +11,25 @@ export const useDocumentVisibility = () => {
       setCount((currentCount) => currentCount + 1);
     }
 
-    callbacks.current.forEach((callback:any) => {
+    callbacks.current.forEach((callback: any) => {
       callback(!document.hidden);
     });
   };
 
   useEffect(() => {
-    document.addEventListener("visibilitychange", handler);
+    document.addEventListener('visibilitychange', handler);
     return () => {
-      document.removeEventListener("visibilitychange", handler);
+      document.removeEventListener('visibilitychange', handler);
     };
   }, []);
 
-  const onVisibilityChange = useCallback((callback:any) => {
+  const onVisibilityChange = useCallback((callback: () => void) => {
     callbacks.current.push(callback);
   }, []);
 
   return {
     count,
     visible,
-    onVisibilityChange
+    onVisibilityChange,
   };
 };
