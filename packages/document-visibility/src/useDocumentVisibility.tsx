@@ -1,9 +1,13 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 
 export const useDocumentVisibility = () => {
+  interface ICallback {
+    (arg0: boolean): void;
+  }
+
   const [count, setCount] = useState(0);
   const [visible, setVisible] = useState(true);
-  const callbacks = useRef<object[]>([]);
+  const callbacks = useRef<ICallback[]>([]);
 
   const handler = () => {
     setVisible(!document.hidden);
@@ -11,7 +15,7 @@ export const useDocumentVisibility = () => {
       setCount((currentCount) => currentCount + 1);
     }
 
-    callbacks.current.forEach((callback: any) => {
+    callbacks.current.forEach((callback) => {
       callback(!document.hidden);
     });
   };
@@ -23,7 +27,7 @@ export const useDocumentVisibility = () => {
     };
   }, []);
 
-  const onVisibilityChange = useCallback((callback: () => void) => {
+  const onVisibilityChange = useCallback((callback: ICallback) => {
     callbacks.current.push(callback);
   }, []);
 

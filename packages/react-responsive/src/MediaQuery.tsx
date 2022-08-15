@@ -2,14 +2,14 @@ import React, { FC, ReactNode } from 'react';
 import { useMediaQuery } from './useMediaQuery';
 
 interface IMediaQueryProps {
-  orientation?: string;
+  orientation: string;
   minResolution?: number | `${number}dppx`;
   maxResolution?: number | `${number}dppx`;
   minWidth?: number;
   maxWidth?: number;
   minHeight?: number;
   maxHeight?: number;
-  children: ReactNode | ((mathes: boolean) => ReactNode);
+  children?: ReactNode | ((mathes: boolean) => ReactNode);
 }
 
 const MediaQuery: FC<IMediaQueryProps> = (props) => {
