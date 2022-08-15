@@ -2,7 +2,7 @@ import React, { FC, ReactNode } from 'react';
 import { useMediaQuery } from './useMediaQuery';
 
 interface IMediaQueryProps {
-  orientation: string;
+  orientation?: string;
   minResolution?: number | `${number}dppx`;
   maxResolution?: number | `${number}dppx`;
   minWidth?: number;
@@ -12,7 +12,10 @@ interface IMediaQueryProps {
   children?: ReactNode | ((mathes: boolean) => ReactNode);
 }
 
-const MediaQuery: FC<IMediaQueryProps> = (props) => {
+type RequireAtLeastOne<T> = { [K in keyof T]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<keyof T, K>>> }[keyof T];
+type MediaQueryProps = RequireAtLeastOne<IMediaQueryProps>;
+
+const MediaQuery: FC<MediaQueryProps> = (props) => {
   const standartMedias = Object.entries(props);
 
   const medias = [];
