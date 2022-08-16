@@ -9,11 +9,14 @@ interface IMediaQueryProps {
   maxWidth?: number;
   minHeight?: number;
   maxHeight?: number;
+}
+
+interface IMediaQeryChildren {
   children?: ReactNode | ((mathes: boolean) => ReactNode);
 }
 
 type RequireAtLeastOne<T> = { [K in keyof T]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<keyof T, K>>> }[keyof T];
-type MediaQueryProps = RequireAtLeastOne<IMediaQueryProps>;
+type MediaQueryProps = RequireAtLeastOne<IMediaQueryProps> & IMediaQeryChildren;
 
 const MediaQuery: FC<MediaQueryProps> = (props) => {
   const standartMedias = Object.entries(props);
