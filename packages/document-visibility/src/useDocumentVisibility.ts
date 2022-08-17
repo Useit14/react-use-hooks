@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 
-export const useDocumentVisibility = () => {
+export const useDocumentVisibility: () => {} = () => {
   interface ICallback {
     (arg0: boolean): void;
   }
